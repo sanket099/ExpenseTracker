@@ -25,6 +25,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sankets.expensetracker.data.Banks
 import com.sankets.expensetracker.domain.util.Constants.BANKS
+import com.sankets.expensetracker.domain.util.Constants.BANK_TYPES
 import com.sankets.expensetracker.presentation.ui.theme.CardColor
 import com.sankets.expensetracker.presentation.ui.theme.PrimaryText
 
@@ -41,40 +42,41 @@ fun GetBanks(
             listOf(
                 Banks(
                     id = 0,
-                    name = "HDFC",
+                    name = BANK_TYPES[0], //HDFC
                     isSelected = false,
                     icon = "https://w7.pngwing.com/pngs/636/81/png-transparent-hdfc-thumbnail-bank-logos.png"
                 ),
 
                 Banks(
                     id = 1,
-                    name = "SBI",
+                    name = BANK_TYPES[1], //SBI
                     isSelected = false,
                     icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/SBI-logo.svg/2048px-SBI-logo.svg.png"
                 ),
                 Banks(
                     id = 2,
-                    name = "ICICI",
+                    name = BANK_TYPES[2], //PAYTM
                     isSelected = false,
-                    icon = "https://i.pinimg.com/originals/ff/d5/31/ffd531a6a78464512a97848e14506738.png"
+                    icon = "https://aniportalimages.s3.amazonaws.com/media/details/pauyau_PlnW2rW.jpg"
                 ),
                 Banks(
                     id = 3,
-                    name = "KOTAK",
-                    isSelected = false,
-                    icon = "https://companieslogo.com/img/orig/KOTAKBANK.NS-36440c5e.png"
-                ),
-                Banks(
-                    id = 4,
-                    name = "AXIS",
+                    name = BANK_TYPES[3], //AXIS
                     isSelected = false,
                     icon = "https://i0.wp.com/www.logotaglines.com/wp-content/uploads/2016/08/Axis-Bank-Logo.png"
                 ),
                 Banks(
-                    id = 5,
-                    name = "PAYTM",
+                    id = 4,
+                    name = BANK_TYPES[4], //KOTAK
                     isSelected = false,
-                    icon = "https://aniportalimages.s3.amazonaws.com/media/details/pauyau_PlnW2rW.jpg"
+                    icon = "https://companieslogo.com/img/orig/KOTAKBANK.NS-36440c5e.png"
+
+                ),
+                Banks(
+                    id = 5,
+                    name = BANK_TYPES[5], //ICICI
+                    isSelected = false,
+                    icon = "https://i.pinimg.com/originals/ff/d5/31/ffd531a6a78464512a97848e14506738.png"
                 ),
             )
         )

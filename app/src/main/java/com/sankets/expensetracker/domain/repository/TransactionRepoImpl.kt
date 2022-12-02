@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.sankets.expensetracker.data.SMS
 import com.sankets.expensetracker.data.Transaction
 import com.sankets.expensetracker.domain.util.Constants.AMOUNT
+import com.sankets.expensetracker.domain.util.Constants.BANK_TYPES
 import com.sankets.expensetracker.domain.util.Constants.MERCHANT
 import com.sankets.expensetracker.domain.util.Resource
 import java.text.SimpleDateFormat
@@ -60,14 +61,8 @@ class TransactionRepoImpl @Inject constructor(
                     val regEx =
                         Pattern.compile("[a-zA-Z0-9]{2}-[a-zA-Z0-9]{6}") // two digit - six digit
                     val matcher = regEx.matcher(smsSource)
-                    if (matcher.find() &&
-                        (smsSource.contains("HDFC")
-                                || smsSource.contains("ICICI")
-                                || smsSource.contains("SBI")
-                                || smsSource.contains("PAYTM")
-                                || smsSource.contains("AXIS")
-                                || smsSource.contains("KOTAK"))
-                    ) { // TO TEST ON DEVICE
+                    val isSMSFromBank = BANK_TYPES.any { it in smsSource }
+                    if (matcher.find() && isSMSFromBank) { // TO TEST ON DEVICE
 //                    if(smsSource.equals("6505551212")){ // TO TEST ON EMULATOR
                         Log.d("TAG", "getAllSMS: hello number $smsSource")
                         if (smsBody.contains("debited") || smsBody.contains("credited") || smsBody.contains(
@@ -148,14 +143,7 @@ class TransactionRepoImpl @Inject constructor(
                     msgBody = sms.msgBody
                 )
                 var regex = ""
-                when (bankType) {
-                    "HDFC" -> regex = "HDFC"
-                    "SBI" -> regex = "SBI"
-                    "ICICI" -> regex = "ICICI"
-                    "KOTAK" -> regex = "KOTAK"
-                    "AXIS" -> regex = "AXIS"
-                    "PAYTM" -> regex = "PAYTM"
-                }
+                if (bankType in BANK_TYPES) regex = bankType
                 println("getAllTransactionsOfBank reg $regex")
                 if (transaction.sourceName.uppercase()
                         .contains(regex) && transaction.msgBody.uppercase()
