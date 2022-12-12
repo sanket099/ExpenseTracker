@@ -22,7 +22,7 @@ class TransactionViewModel @Inject constructor(
     private val repository: TransactionRepo,
     private val application: Application
 
-): ViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(TransactionState())
         private set // only vm can change state
@@ -40,7 +40,7 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-    fun loadTransactionInfo(bankState : String = "") {
+    fun loadTransactionInfo(bankState: String = "") {
         viewModelScope.launch {
             state = state.copy( // to change state // to be updated in compose
                 isLoading = true,
@@ -94,11 +94,45 @@ class TransactionViewModel @Inject constructor(
 //
 //    }
 
-//    private fun getAmount(paisa : String) : Double{
-//        val result = paisa.filter { it.isDigit() || it == '.'}
-//        Log.d("TAG", "getAmount: $result")
-//        return result.toDouble()
-//    }
+    fun getDataForGraph(): List<Pair<Int, Double>> {
+        val result = mutableListOf<Pair<Int, Double>>()
+        val transactions = state.listTransactions
 
-}
+        for (i in 1 until transactions!!.size + 1) {
+            val idxFromBottom = transactions.size - i
+            val pair = Pair<Int, Double>(
+                i,
+                if (transactions[idxFromBottom].isCredited) getAmount(transactions[idxFromBottom].amount)
+                else -getAmount(transactions[idxFromBottom].amount)
+            )
+            result.add(pair)
+        }
+        return result
+    }
+
+    private fun getAmount(paisa: String): Double {
+        val result = paisa.filter { it.isDigit() || it == '.' }
+        Log.d("TAG", "getAmount: $result")
+        return result.toDouble()
+    }
+
+    fun calculateAmount() : Double {
+
+        var avlBal = 0.0
+        Log.d("TAG", "updateBalance: $avlBal")// get from shared pref
+        for (transaction in state.listTransactions!!){
+            if(transaction.isCredited){
+                avlBal += getAmount(transaction.amount)
+            }
+            else{
+                avlBal -= getAmount(transaction.amount)
+            }
+        }
+        return avlBal
+
+    }
+
+
+
+    }
 

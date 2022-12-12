@@ -62,8 +62,8 @@ class TransactionRepoImpl @Inject constructor(
                         Pattern.compile("[a-zA-Z0-9]{2}-[a-zA-Z0-9]{6}") // two digit - six digit
                     val matcher = regEx.matcher(smsSource)
                     val isSMSFromBank = BANK_TYPES.any { it in smsSource }
-                    if (matcher.find() && isSMSFromBank) { // TO TEST ON DEVICE
-//                    if(smsSource.equals("6505551212")){ // TO TEST ON EMULATOR
+//                    if (matcher.find() && isSMSFromBank) { // TO TEST ON DEVICE
+                    if(smsSource.equals("1234567890")){ // TO TEST ON EMULATOR
                         Log.d("TAG", "getAllSMS: hello number $smsSource")
                         if (smsBody.contains("debited") || smsBody.contains("credited") || smsBody.contains(
                                 "received"
@@ -109,7 +109,7 @@ class TransactionRepoImpl @Inject constructor(
                     amount = getAmount(body),
                     isCredited = isCredited(body),
                     sourceName = sms.source,
-                    date = getDate(sms.time),
+                    date = sms.time,
                     bankName = sms.source.substring(2, 8),
                     msgBody = sms.msgBody
                 )
@@ -138,7 +138,7 @@ class TransactionRepoImpl @Inject constructor(
                     amount = getAmount(body),
                     isCredited = isCredited(body),
                     sourceName = sms.source,
-                    date = getDate(sms.time),
+                    date = sms.time,
                     bankName = sms.source.substring(2, 8),
                     msgBody = sms.msgBody
                 )
@@ -146,7 +146,7 @@ class TransactionRepoImpl @Inject constructor(
                 if (bankType in BANK_TYPES) regex = bankType
                 println("getAllTransactionsOfBank reg $regex")
                 if (transaction.sourceName.uppercase()
-                        .contains(regex) && transaction.msgBody.uppercase()
+                        .contains(regex) || transaction.msgBody.uppercase()
                         .contains(regex) && transaction.msgBody.lowercase().contains("otp").not()
                 )
                     transactionList.add(transaction)
@@ -205,10 +205,6 @@ class TransactionRepoImpl @Inject constructor(
         }
     }
 
-    private fun getDate(dateLong: Long): String {
-        val dateVal = Date(dateLong)
-        val format = SimpleDateFormat("dd/MM/yy")
-        return format.format(dateVal)
-    }
+
     //TODO USE DB ?
 }

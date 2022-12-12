@@ -26,8 +26,10 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.sankets.expensetracker.data.Banks
 import com.sankets.expensetracker.domain.util.Constants.BANKS
 import com.sankets.expensetracker.domain.util.Constants.BANK_TYPES
+import com.sankets.expensetracker.presentation.ui.theme.Background
 import com.sankets.expensetracker.presentation.ui.theme.CardColor
 import com.sankets.expensetracker.presentation.ui.theme.PrimaryText
+import com.sankets.expensetracker.presentation.ui.theme.SecondaryText
 
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalGlideComposeApi::class)
@@ -89,7 +91,7 @@ fun GetBanks(
     }
 
     Scaffold(
-        backgroundColor = backgroundColor,
+        backgroundColor = Background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -112,12 +114,21 @@ fun GetBanks(
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Choose Banks",
+                text = "Select Banks",
                 color = PrimaryText,
                 fontSize = 24.sp,
                 textAlign = TextAlign.Start,
             )
             Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Select Banks for which you want to track expense",
+                color = SecondaryText,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Start,
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
@@ -127,7 +138,7 @@ fun GetBanks(
                             backgroundColor = CardColor,
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier.padding(top = 8.dp, end = 8.dp),
-                            border = BorderStroke(if(items[i].isSelected) 2.dp else 0.dp, Color.White)
+                            border = BorderStroke(if(items[i].isSelected) 3.dp else 1.dp, if(items[i].isSelected) Color.White else Color.Gray)
                         ) {
                             Column(
                                 modifier = Modifier
@@ -143,12 +154,6 @@ fun GetBanks(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = items[i].name,
-                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                                    color = Color.White
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
                                 GlideImage(
                                     model = items[i].icon,
                                     contentDescription = "image",
@@ -157,6 +162,14 @@ fun GetBanks(
                                         .align(Alignment.CenterHorizontally)
                                         .padding(10.dp)
                                 )
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = items[i].name,
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    color = Color.White
+                                )
+
                                 Spacer(modifier = Modifier.height(8.dp))
 //                            Image(
 //                                painter = painterResource(id = items[i].icon),

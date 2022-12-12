@@ -4,7 +4,8 @@ package com.sankets.expensetracker.presentation
 sealed class Screen(val route : String) {
     object HomeScreen: Screen("home")
     object SmsScreen: Screen("sms_screen")
-    object AvlBalScreen : Screen("available_balance")
+    object ChooseBanksScreen : Screen("choose_banks")
+    object DetailTransactionScreen : Screen("detail_transactions")
 
     fun withArgs(vararg args : String): String{
         return buildString {

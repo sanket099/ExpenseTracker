@@ -20,6 +20,8 @@ import androidx.navigation.NavController
 import com.sankets.expensetracker.R
 import com.sankets.expensetracker.data.Transaction
 import com.sankets.expensetracker.presentation.ui.theme.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun ExpenseCard(
@@ -36,7 +38,7 @@ fun ExpenseCard(
                 selected = true,
                 onClick = {
                     val body  = item.msgBody.replace("/","\\")
-                    val date = item.date.replace("/", "\\")
+                    val date = getDate(item.date).replace("/", "\\")
                     val source = item.sourceName.replace("/", "\\")
                     navController.navigate(Screen.SmsScreen.withArgs(source, body, date))
                     Log.d("TAG", "ExpenseCard: ${body}")
@@ -55,7 +57,7 @@ fun ExpenseCard(
                 Text(
                     text = item.amount,
                     color = PrimaryText,
-                    style = MaterialTheme.typography.body1
+                    fontSize = 18.sp
                 )
                 if (item.isCredited) {
                     Icon(
@@ -74,7 +76,7 @@ fun ExpenseCard(
                 }
             }
 
-            Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = modifier.height(8.dp))
             Row(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -85,7 +87,7 @@ fun ExpenseCard(
                     style = MaterialTheme.typography.body2
                 )
                 Text(
-                    text = item.date,
+                    text = getDate(item.date),
                     color = SecondaryText,
                     style = MaterialTheme.typography.body2
                 )
@@ -96,4 +98,10 @@ fun ExpenseCard(
     }
 
 
+}
+
+private fun getDate(dateLong: Long): String {
+    val dateVal = Date(dateLong)
+    val format = SimpleDateFormat("dd/MM/yy")
+    return format.format(dateVal)
 }

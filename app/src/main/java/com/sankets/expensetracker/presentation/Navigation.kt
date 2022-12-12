@@ -51,15 +51,20 @@ fun Navigation(viewModel: TransactionViewModel) {
                 smsDate = navBackStackEntry.arguments?.getString("sms_date")
             )
         }
-        composable(route = Screen.AvlBalScreen.route) {
+        composable(route = Screen.ChooseBanksScreen.route) {
             GetBanks(viewModel = viewModel, navController = navController)
+        }
+        composable(
+            route = Screen.DetailTransactionScreen.route
+        ){
+            DetailTransactions(viewModel = viewModel, navController = navController)
         }
     }
 }
 
 fun whichScreen(sharedPrefs: SharedPrefs): String{
     return if(sharedPrefs.getBanks(BANKS) == emptySet<String>()){
-        Screen.AvlBalScreen.route
+        Screen.ChooseBanksScreen.route
     }
     else{
         Screen.HomeScreen.route
