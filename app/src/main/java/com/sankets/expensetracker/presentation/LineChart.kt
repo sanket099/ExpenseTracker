@@ -1,7 +1,9 @@
 package com.sankets.expensetracker.presentation
 
 import android.graphics.Paint
+import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -10,6 +12,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.log
 import kotlin.math.round
 import kotlin.math.roundToInt
 
@@ -76,6 +79,7 @@ fun LineChart(
         }
 
         drawPath(
+
             path = strokePath,
             color = graphColor,
             style = Stroke(

@@ -101,7 +101,7 @@ class TransactionViewModel @Inject constructor(
         for (i in 1 until transactions!!.size + 1) {
             val idxFromBottom = transactions.size - i
             val pair = Pair<Int, Double>(
-                i,
+                transactions[idxFromBottom].date.toInt(),
                 if (transactions[idxFromBottom].isCredited) getAmount(transactions[idxFromBottom].amount)
                 else -getAmount(transactions[idxFromBottom].amount)
             )
@@ -111,22 +111,34 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun getAmount(paisa: String): Double {
-        val result = paisa.filter { it.isDigit() || it == '.' }
+        var result = paisa.filter { it.isDigit() || it == '.' }
         Log.d("TAG", "getAmount: $result")
+        if(result.startsWith('.')){
+            result = result.substring(1, result.length-1)
+        }
+        if(result.endsWith('.')){
+            result = result.substring(0, result.length-2)
+        }
         return result.toDouble()
     }
 
-    fun calculateAmount() : Double {
+    fun calculateAmountBetweenDates(startDate : Long, endDate : Long) : Double {
 
         var avlBal = 0.0
-        Log.d("TAG", "updateBalance: $avlBal")// get from shared pref
         for (transaction in state.listTransactions!!){
-            if(transaction.isCredited){
-                avlBal += getAmount(transaction.amount)
+            if(transaction.date in startDate..endDate ||(startDate == endDate && transaction.date == startDate) ){
+                if(transaction.isCredited){
+                    Log.d("TAG", "updateBalance: $avlBal")// get from shared pref
+
+                    avlBal += getAmount(transaction.amount)
+                }
+                else{
+                    Log.d("TAG", "updateBalance: $avlBal")// get from shared pref
+
+                    avlBal -= getAmount(transaction.amount)
+                }
             }
-            else{
-                avlBal -= getAmount(transaction.amount)
-            }
+
         }
         return avlBal
 

@@ -61,7 +61,7 @@ class TransactionRepoImpl @Inject constructor(
                     val regEx =
                         Pattern.compile("[a-zA-Z0-9]{2}-[a-zA-Z0-9]{6}") // two digit - six digit
                     val matcher = regEx.matcher(smsSource)
-                    val isSMSFromBank = BANK_TYPES.any { it in smsSource }
+                    val isSMSFromBank = BANK_TYPES.any { it in smsSource.uppercase() }
 //                    if (matcher.find() && isSMSFromBank) { // TO TEST ON DEVICE
                     if(smsSource.equals("1234567890")){ // TO TEST ON EMULATOR
                         Log.d("TAG", "getAllSMS: hello number $smsSource")
@@ -79,7 +79,7 @@ class TransactionRepoImpl @Inject constructor(
                             lstSms.add(objectSMS)
                         }
                     } else {
-                        Log.d("TAG", "getAllSMS: not found anything $smsSource ")
+                        Log.d("TAG", "getAllSMS: not found anything $smsSource $smsBody ")
                     }
                     cursor.moveToNext()
                     Log.d("TAG", "getAllSMS: hello $lstSms")
@@ -150,6 +150,9 @@ class TransactionRepoImpl @Inject constructor(
                         .contains(regex) && transaction.msgBody.lowercase().contains("otp").not()
                 )
                     transactionList.add(transaction)
+                else{
+                    println("getAllTransactionsOfBank error ${transaction.sourceName.uppercase()}")
+                }
 
                 println("getAllTransactionsOfBank list $transactionList")
             }

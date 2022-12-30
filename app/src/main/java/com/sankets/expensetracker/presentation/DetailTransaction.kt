@@ -1,15 +1,17 @@
 package com.sankets.expensetracker.presentation
 
+import android.text.format.DateFormat
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,10 +20,11 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.sankets.expensetracker.presentation.ui.theme.Accent
 import com.sankets.expensetracker.presentation.ui.theme.Background
 import com.sankets.expensetracker.presentation.ui.theme.PrimaryText
+import java.util.*
 
 @OptIn(
     ExperimentalFoundationApi::class, ExperimentalGlideComposeApi::class,
-    ExperimentalMaterialApi::class
+    ExperimentalMaterialApi::class, ExperimentalTextApi::class
 )
 @Composable
 fun DetailTransactions(
@@ -42,52 +45,82 @@ fun DetailTransactions(
                 .fillMaxWidth()
         ) {
 
-            var text by remember { mutableStateOf("") }
+            val maxDate = viewModel.state.listTransactions?.maxOf { it.date }
+            val minDate = viewModel.state.listTransactions?.minOf { it.date }
+            Log.d("TAG", "DetailTransactions: $maxDate $minDate")
+            val maxDateFloat = maxDate!!.toFloat()
+            val minDateFloat = minDate!!.toFloat()
+            Log.d("TAG", "DetailTransactions: $maxDateFloat $minDateFloat")
+            var sliderPosition by remember { mutableStateOf(minDateFloat.rangeTo(maxDateFloat)) }
 
-            Text(
-                text = text,
-                color = PrimaryText,
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-                )
+            var text by remember { mutableStateOf(viewModel.calculateAmountBetweenDates(minDate, maxDate).toString()) }
+            var textStartDate by remember { mutableStateOf(timeStampToDate(minDate)) }
+            var textEndDate by remember { mutableStateOf(timeStampToDate(maxDate)) }
+
 
             Card(
                 backgroundColor = Background,
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             ) {
-//            LineChart(
-//                data = viewModel.getDataForGraph(),
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(30.dp)
-//
-//            )
-
-                var maxDate = viewModel.state.listTransactions?.maxOf { it.date }
-                var minDate = viewModel.state.listTransactions?.minOf { it.date }
-                var sliderPosition by remember { mutableStateOf(minDate!!.toFloat().rangeTo(maxDate!!.toFloat())) }
 
                 RangeSlider(
-
+                    steps = (maxDateFloat - minDateFloat).toInt()/86400000,
                     values = sliderPosition,
                     onValueChange = { sliderPosition = it },
-                    valueRange = 0f..100f,
+                    valueRange = minDateFloat..maxDateFloat,
                     onValueChangeFinished = {
-                        text = viewModel.calculateAmount().toString()
+                        Log.d("onValueChangeFinished", "DetailTransactions: ${sliderPosition.start} ${sliderPosition.endInclusive}")
+                        text = viewModel.calculateAmountBetweenDates(sliderPosition.start.toLong(), sliderPosition.endInclusive.toLong()).toString()
+                        textStartDate = timeStampToDate(sliderPosition.start.toLong())
+                        textEndDate = timeStampToDate(sliderPosition.endInclusive.toLong())
                         // launch soe business logic update with the state you hold
                         // viewModel.updateSelectedSliderValue(sliderPosition)
                     },
                     colors = SliderDefaults.colors(
                         thumbColor = Accent,
                         activeTrackColor = Accent,
-
-
-                    )
+                        )
                 )
 
-
             }
+
+            Text(
+
+                buildAnnotatedString {
+                    append("The net amount is Rs.")
+                    withStyle(
+                        style = SpanStyle(color = Color.Cyan)
+                    ) {
+                        append(text)
+                    }
+                    append("\nbetween\n")
+
+                    withStyle(
+                        style = SpanStyle(color = Color.Cyan)
+                    ) {
+                        append(textStartDate)
+                    }
+                    append(" and ")
+                    withStyle(
+                        style = SpanStyle(color = Color.Cyan)
+                    ) {
+                        append(textEndDate)
+                    }
+                },
+                color = PrimaryText,
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+            )
+
+            LineChart(
+                data = viewModel.getDataForGraph(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(30.dp)
+
+            )
+
 
         }
 
@@ -102,7 +135,7 @@ fun DetailTransactions(
 
 
     // Features
-    // 1. Get List of Expenses of differeent Banks
+    // 1. Get List of Expenses of different Banks -- done
     // 2. Get Net value between dates for different Banks
     // 3. Get Graph of Expenses of different Banks : Date vs Amount
     // 4. Get pie chart of different bank Amounts monthly, weekly, yearly, today
@@ -110,5 +143,12 @@ fun DetailTransactions(
     // There will have to be a stats section
 
 
+}
+
+fun timeStampToDate(timeStamp: Long): String {
+    val calendar = Calendar.getInstance(Locale.ENGLISH)
+    calendar.timeInMillis = timeStamp
+    val date = DateFormat.format("dd-MM-yyyy", calendar).toString()
+    return date
 }
 
