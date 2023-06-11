@@ -18,6 +18,7 @@ import com.sankets.expensetracker.presentation.ui.theme.Background
 import com.sankets.expensetracker.presentation.ui.theme.CardColor
 import com.sankets.expensetracker.presentation.ui.theme.PrimaryText
 import com.sankets.expensetracker.presentation.ui.theme.SecondaryText
+import kotlin.random.Random
 
 
 @Composable
@@ -85,7 +86,7 @@ fun SmsDetailScreen(
             Spacer(modifier = modifier.height(16.dp))
 
             Image(
-                painterResource(R.drawable.ic_business_mission_animate),
+                painterResource(getRandomDoodle()),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
@@ -105,6 +106,12 @@ fun SmsDetailScreen(
 
     }
 
-}
 
+
+}
+private fun getRandomDoodle() : Int{
+    val doodleList = listOf<Int>(R.drawable.doodle, R.drawable.doodle2, R.drawable.doodle3, R.drawable.doodle4, R.drawable.doodle5)
+    val index = Random.nextInt(0, doodleList.size)
+    return doodleList[index]
+}
 

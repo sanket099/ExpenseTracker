@@ -62,8 +62,8 @@ class TransactionRepoImpl @Inject constructor(
                         Pattern.compile("[a-zA-Z0-9]{2}-[a-zA-Z0-9]{6}") // two digit - six digit
                     val matcher = regEx.matcher(smsSource)
                     val isSMSFromBank = BANK_TYPES.any { it in smsSource.uppercase() }
-//                    if (matcher.find() && isSMSFromBank) { // TO TEST ON DEVICE
-                    if(smsSource.equals("1234567890")){ // TO TEST ON EMULATOR
+                    if (matcher.find() && isSMSFromBank) { // TO TEST ON DEVICE
+//                    if(smsSource.equals("1234567890")){ // TO TEST ON EMULATOR
                         Log.d("TAG", "getAllSMS: hello number $smsSource")
                         if (smsBody.contains("debited") || smsBody.contains("credited") || smsBody.contains(
                                 "received"

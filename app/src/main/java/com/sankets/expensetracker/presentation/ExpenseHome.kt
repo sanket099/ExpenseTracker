@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,23 +36,31 @@ fun ExpenseHome(
 ) {
     println("HELLO " + viewModel.sharedPrefs.getBanks(BANKS))
 
-    val options = viewModel.sharedPrefs.getBanks(BANKS)?.toList()
+    val options = viewModel.sharedPrefs.getBanks(BANKS)?.toMutableList()
+    options?.add("ALL")
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    var selectedOptionText by rememberSaveable {
+        if(options!!.isNotEmpty()){
+            mutableStateOf("ALL")
+        }
+        else{
+            mutableStateOf("")
+        }
 
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options!![0]) }
+    }
 
     Scaffold(
         backgroundColor = Background,
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate(Screen.DetailTransactionScreen.route)
-                },
-                backgroundColor = Color.White,
-            ) {
-                Icon(Icons.Filled.Info, "")
-            }
-        }
+//        floatingActionButton = {
+//            FloatingActionButton(
+//                onClick = {
+//                    navController.navigate(Screen.DetailTransactionScreen.route)
+//                },
+//                backgroundColor = Color.White,
+//            ) {
+//                Icon(Icons.Filled.Info, "")
+//            }
+//        }
     ) {
 
         Box(

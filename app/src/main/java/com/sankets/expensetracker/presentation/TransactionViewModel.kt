@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sankets.expensetracker.data.SharedPrefs
@@ -46,9 +47,13 @@ class TransactionViewModel @Inject constructor(
                 isLoading = true,
                 error = null
             )
+            var bankStateLocal = bankState
+            if(bankStateLocal.uppercase() == "ALL") {
+                bankStateLocal = ""
+            }
             repository.getAllSMS(application)?.let { SMSList -> // if we get the location
                 when (val result =
-                    repository.getAllTransactionsOfBank(SMSList.data, bankState)) {
+                    repository.getAllTransactionsOfBank(SMSList.data, bankStateLocal)) {
                     is Resource.Success -> {
                         Log.d("TAG", "loadTransactionInfo: ${result.data}")
 //                        updateBalance(result.data)
@@ -111,15 +116,21 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun getAmount(paisa: String): Double {
-        var result = paisa.filter { it.isDigit() || it == '.' }
-        Log.d("TAG", "getAmount: $result")
-        if(result.startsWith('.')){
-            result = result.substring(1, result.length-1)
+        try{
+            var result = paisa.filter { it.isDigit() || it == '.' }
+            Log.d("TAG", "getAmount: $result")
+            if(result.startsWith('.')){
+                result = result.substring(1, result.length-1)
+            }
+            if(result.endsWith('.')){
+                result = result.substring(0, result.length-2)
+            }
+            return result.toDouble()
         }
-        if(result.endsWith('.')){
-            result = result.substring(0, result.length-2)
+        catch(ex :Exception){
+            return 0.0
         }
-        return result.toDouble()
+
     }
 
     fun calculateAmountBetweenDates(startDate : Long, endDate : Long) : Double {
