@@ -9,14 +9,13 @@ import android.database.Cursor
 import android.net.Uri
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.sankets.expensetracker.data.SMS
 import com.sankets.expensetracker.data.Transaction
 import com.sankets.expensetracker.domain.util.Constants.AMOUNT
 import com.sankets.expensetracker.domain.util.Constants.BANK_TYPES
 import com.sankets.expensetracker.domain.util.Constants.MERCHANT
 import com.sankets.expensetracker.domain.util.Resource
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -39,6 +38,9 @@ class TransactionRepoImpl @Inject constructor(
 
         // if permissions are not provided
         if (!hasReadSmsPermission || !hasReceiveSmsPermission) {
+            FirebaseCrashlytics.getInstance().apply {
+                log("No Crash : Permissions Not Granted")
+            }
             return null
         }
 
@@ -80,6 +82,9 @@ class TransactionRepoImpl @Inject constructor(
                         }
                     } else {
                         Log.d("TAG", "getAllSMS: not found anything $smsSource $smsBody ")
+                        FirebaseCrashlytics.getInstance().apply {
+                            log("No Crash : getAllSMS: not found anything $smsSource $smsBody")
+                        }
                     }
                     cursor.moveToNext()
                     Log.d("TAG", "getAllSMS: hello $lstSms")
@@ -92,6 +97,9 @@ class TransactionRepoImpl @Inject constructor(
             )
 
         } catch (exception: Exception) {
+            FirebaseCrashlytics.getInstance().apply {
+                log("No Crash : Exception ${exception.message}")
+            }
             return Resource.Error(
                 exception.message ?: "unknown Exception"
             )
@@ -118,6 +126,9 @@ class TransactionRepoImpl @Inject constructor(
             }
             return Resource.Success(data = transactionList)
         } catch (ex: Exception) {
+            FirebaseCrashlytics.getInstance().apply {
+                log("No Crash : Exception ${ex.message}")
+            }
             return Resource.Error(ex.message ?: "unknown Exception")
         }
 
@@ -158,6 +169,9 @@ class TransactionRepoImpl @Inject constructor(
             }
             return Resource.Success(data = transactionList)
         } catch (ex: Exception) {
+            FirebaseCrashlytics.getInstance().apply {
+                log("No Crash : Exception ${ex.message}")
+            }
             return Resource.Error(ex.message ?: "unknown Exception")
         }
 
@@ -207,7 +221,4 @@ class TransactionRepoImpl @Inject constructor(
             return ""
         }
     }
-
-
-    //TODO USE DB ?
 }
