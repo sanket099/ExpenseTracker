@@ -1,4 +1,4 @@
-package com.sankets.expensetracker.data.room
+package com.sankets.expensetracker.data.storage
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

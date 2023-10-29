@@ -7,6 +7,10 @@ sealed class Screen(val route : String) {
     object ChooseBanksScreen : Screen("choose_banks")
     object DetailTransactionScreen : Screen("detail_transactions")
 
+    object OnboardingScreen : Screen("onboarding")
+
+    object PrivacyPolicyScreen : Screen("privacy_policy")
+
     fun withArgs(vararg args : String): String{
         return buildString {
             append(route)

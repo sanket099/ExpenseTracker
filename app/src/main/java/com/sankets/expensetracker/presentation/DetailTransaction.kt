@@ -31,100 +31,100 @@ fun DetailTransactions(
     viewModel: TransactionViewModel,
     navController: NavController
 ) {
-    Scaffold(
-        backgroundColor = Background,
-        modifier = Modifier
-            .fillMaxWidth()
+//    Scaffold(
+//        backgroundColor = Background,
+//        modifier = Modifier
+//            .fillMaxWidth()
+//
+//    ) {
+//
+//        Column(
+//            verticalArrangement = Arrangement.Center,
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//        ) {
+//
+//            val maxDate = viewModel.state.listTransactions?.maxOf { it.date }
+//            val minDate = viewModel.state.listTransactions?.minOf { it.date }
+//            Log.d("TAG", "DetailTransactions: $maxDate $minDate")
+//            val maxDateFloat = maxDate!!.toFloat()
+//            val minDateFloat = minDate!!.toFloat()
+//            Log.d("TAG", "DetailTransactions: $maxDateFloat $minDateFloat")
+//            var sliderPosition by remember { mutableStateOf(minDateFloat.rangeTo(maxDateFloat)) }
+//
+//            var text by remember { mutableStateOf(viewModel.calculateAmountBetweenDates(minDate, maxDate).toString()) }
+//            var textStartDate by remember { mutableStateOf(timeStampToDate(minDate)) }
+//            var textEndDate by remember { mutableStateOf(timeStampToDate(maxDate)) }
+//
+//
+//            Card(
+//                backgroundColor = Background,
+//                shape = RoundedCornerShape(10.dp),
+//                modifier = Modifier.padding(10.dp)
+//            ) {
+//
+//                RangeSlider(
+//                    steps = (maxDateFloat - minDateFloat).toInt()/86400000,
+//                    values = sliderPosition,
+//                    onValueChange = { sliderPosition = it },
+//                    valueRange = minDateFloat..maxDateFloat,
+//                    onValueChangeFinished = {
+//                        Log.d("onValueChangeFinished", "DetailTransactions: ${sliderPosition.start} ${sliderPosition.endInclusive}")
+//                        text = viewModel.calculateAmountBetweenDates(sliderPosition.start.toLong(), sliderPosition.endInclusive.toLong()).toString()
+//                        textStartDate = timeStampToDate(sliderPosition.start.toLong())
+//                        textEndDate = timeStampToDate(sliderPosition.endInclusive.toLong())
+//                        // launch soe business logic update with the state you hold
+//                        // viewModel.updateSelectedSliderValue(sliderPosition)
+//                    },
+//                    colors = SliderDefaults.colors(
+//                        thumbColor = Accent,
+//                        activeTrackColor = Accent,
+//                        )
+//                )
+//
+//            }
+//
+//            Text(
+//
+//                buildAnnotatedString {
+//                    append("The net amount is Rs.")
+//                    withStyle(
+//                        style = SpanStyle(color = Color.Cyan)
+//                    ) {
+//                        append(text)
+//                    }
+//                    append("\nbetween\n")
+//
+//                    withStyle(
+//                        style = SpanStyle(color = Color.Cyan)
+//                    ) {
+//                        append(textStartDate)
+//                    }
+//                    append(" and ")
+//                    withStyle(
+//                        style = SpanStyle(color = Color.Cyan)
+//                    ) {
+//                        append(textEndDate)
+//                    }
+//                },
+//                color = PrimaryText,
+//                fontSize = 24.sp,
+//                textAlign = TextAlign.Center,
+//            )
+//
+//            LineChart(
+//                data = viewModel.getDataForGraph(),
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .padding(30.dp)
+//
+//            )
+//
+//
+//        }
 
-    ) {
 
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-
-            val maxDate = viewModel.state.listTransactions?.maxOf { it.date }
-            val minDate = viewModel.state.listTransactions?.minOf { it.date }
-            Log.d("TAG", "DetailTransactions: $maxDate $minDate")
-            val maxDateFloat = maxDate!!.toFloat()
-            val minDateFloat = minDate!!.toFloat()
-            Log.d("TAG", "DetailTransactions: $maxDateFloat $minDateFloat")
-            var sliderPosition by remember { mutableStateOf(minDateFloat.rangeTo(maxDateFloat)) }
-
-            var text by remember { mutableStateOf(viewModel.calculateAmountBetweenDates(minDate, maxDate).toString()) }
-            var textStartDate by remember { mutableStateOf(timeStampToDate(minDate)) }
-            var textEndDate by remember { mutableStateOf(timeStampToDate(maxDate)) }
-
-
-            Card(
-                backgroundColor = Background,
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.padding(10.dp)
-            ) {
-
-                RangeSlider(
-                    steps = (maxDateFloat - minDateFloat).toInt()/86400000,
-                    values = sliderPosition,
-                    onValueChange = { sliderPosition = it },
-                    valueRange = minDateFloat..maxDateFloat,
-                    onValueChangeFinished = {
-                        Log.d("onValueChangeFinished", "DetailTransactions: ${sliderPosition.start} ${sliderPosition.endInclusive}")
-                        text = viewModel.calculateAmountBetweenDates(sliderPosition.start.toLong(), sliderPosition.endInclusive.toLong()).toString()
-                        textStartDate = timeStampToDate(sliderPosition.start.toLong())
-                        textEndDate = timeStampToDate(sliderPosition.endInclusive.toLong())
-                        // launch soe business logic update with the state you hold
-                        // viewModel.updateSelectedSliderValue(sliderPosition)
-                    },
-                    colors = SliderDefaults.colors(
-                        thumbColor = Accent,
-                        activeTrackColor = Accent,
-                        )
-                )
-
-            }
-
-            Text(
-
-                buildAnnotatedString {
-                    append("The net amount is Rs.")
-                    withStyle(
-                        style = SpanStyle(color = Color.Cyan)
-                    ) {
-                        append(text)
-                    }
-                    append("\nbetween\n")
-
-                    withStyle(
-                        style = SpanStyle(color = Color.Cyan)
-                    ) {
-                        append(textStartDate)
-                    }
-                    append(" and ")
-                    withStyle(
-                        style = SpanStyle(color = Color.Cyan)
-                    ) {
-                        append(textEndDate)
-                    }
-                },
-                color = PrimaryText,
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-            )
-
-            LineChart(
-                data = viewModel.getDataForGraph(),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(30.dp)
-
-            )
-
-
-        }
-
-    }
 
     // TODO //
 //  1. Create Figma Designs

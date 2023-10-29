@@ -28,5 +28,11 @@ class SharedPrefs @Inject constructor(application: Application) {
     fun getBanks(key: String): MutableSet<String>? {
         return sharedPreferences.getStringSet(key, emptySet())
     }
+    fun setBoolean(key: String, value : Boolean){
+        editor.putBoolean(key, value).apply()
+    }
+    fun getBoolean(key: String, defaultValue : Boolean) : Boolean {
+        return sharedPreferences.getBoolean(key, defaultValue)
+    }
 
 }

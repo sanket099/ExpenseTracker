@@ -1,5 +1,6 @@
 package com.sankets.expensetracker.presentation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -7,8 +8,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sankets.expensetracker.data.SharedPrefs
+import com.sankets.expensetracker.domain.util.Constants
 import com.sankets.expensetracker.domain.util.Constants.BANKS
+import com.sankets.expensetracker.domain.util.Constants.IS_FIRST_LAUNCH
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Navigation(viewModel: TransactionViewModel) {
     val navController = rememberNavController()
@@ -54,16 +58,29 @@ fun Navigation(viewModel: TransactionViewModel) {
         composable(route = Screen.ChooseBanksScreen.route) {
             GetBanks(viewModel = viewModel, navController = navController)
         }
+//        composable(
+//            route = Screen.DetailTransactionScreen.route
+//        ){
+//            DetailTransactions(viewModel = viewModel, navController = navController)
+//        }
         composable(
-            route = Screen.DetailTransactionScreen.route
+            route = Screen.OnboardingScreen.route
         ){
-            DetailTransactions(viewModel = viewModel, navController = navController)
+            OnboardingScreen(viewModel, navController = navController)
+        }
+        composable(
+            route = Screen.PrivacyPolicyScreen.route
+        ){
+            PrivacyPolicyScreen()
         }
     }
 }
 
 fun whichScreen(sharedPrefs: SharedPrefs): String{
-    return if(sharedPrefs.getBanks(BANKS) == emptySet<String>()){
+    return if(sharedPrefs.getBoolean(IS_FIRST_LAUNCH, true)){
+        Screen.OnboardingScreen.route
+    }
+    else if(sharedPrefs.getBanks(BANKS) == emptySet<String>()){
         Screen.ChooseBanksScreen.route
     }
     else{

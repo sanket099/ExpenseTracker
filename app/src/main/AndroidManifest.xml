@@ -35,13 +35,24 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".data.SmsReceiver"
-            android:exported="false"
-            android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="1000">
+        <receiver android:name=".receiver.SmsReceiver"
+            android:exported="true">
+            <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <!-- Disabling default initializer of Work Manager -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
     </application>
 
 </manifest>

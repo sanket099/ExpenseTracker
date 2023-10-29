@@ -3,8 +3,10 @@ package com.sankets.expensetracker.data.di
 import android.app.Application
 import androidx.room.Room
 import com.sankets.expensetracker.data.SharedPrefs
-import com.sankets.expensetracker.data.room.TransactionDao
-import com.sankets.expensetracker.data.room.TransactionDb
+import com.sankets.expensetracker.data.di.coroutine.CoroutineDispatcherProvider
+import com.sankets.expensetracker.data.storage.StorageManager
+import com.sankets.expensetracker.data.storage.TransactionDao
+import com.sankets.expensetracker.data.storage.TransactionDb
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +34,10 @@ object StorageModule {
     @Provides
     @Singleton
     fun provideSharedPreference(application: Application): SharedPrefs = SharedPrefs(application)
+
+    @Provides
+    @Singleton
+    fun providesStorageManager(dispatcherProvider: CoroutineDispatcherProvider, transactionDao: TransactionDao, sharedPrefs: SharedPrefs) : StorageManager = StorageManager(dispatcherProvider, transactionDao, sharedPrefs)
 
 
 

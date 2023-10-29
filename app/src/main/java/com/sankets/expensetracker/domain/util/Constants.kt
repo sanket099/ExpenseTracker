@@ -4,6 +4,7 @@ import javax.annotation.concurrent.Immutable
 
 object Constants {
 
+    const val ALL = "ALL"
     const val TRANSACTION_TABLE = "transaction_table"
 
     const val AMOUNT = "(?i)(?:(?:RS|INR|MRP)\\.?\\s?)(\\d+(:?\\,\\d+)?(\\,\\d+)?(\\.\\d{1,2})?)"
@@ -24,6 +25,7 @@ object Constants {
     const val BANKS = "BANKS"
 
     val BANK_TYPES = listOf<String>(
+        "ALL",
         "HDFC",
         "SBI",
         "PAYTM",
@@ -32,4 +34,22 @@ object Constants {
         "ICICI",
     )
 
+    // Worker
+    val workerRequestTime = 1L
+    val TAG_WORKER = "PERIODIC_TAG_SMS_WORKER"
+    val SMS_WORK_ID = "PERIODIC_SMS_WORK_ID"
+    val TAG_ONETIME_WORKER= "ONETIME_TAG_SMS_WORKER"
+    val SMS_ONETIME_WORK_ID = "ONETIME_SMS_WORK_ID"
+
+    // Broadcast Received
+    val NUMBER_OF_NEW_MESSAGES_RECIEVED: String = "NUMBER_OF_NEW_MESSAGES_RECIEVED"
+
+    // SharedPreferences
+    const val IS_FIRST_LAUNCH = "IS_FIRST_LAUNCH"
+    const val ARE_PERMISSIONS_GRANTED = "ARE_PERMISSIONS_GRANTED"
+
+    // Timber TAGS
+    const val LOG_WORKER = "LOG_WORKER"
+    const val LOG_MAIN = "MAIN_ACTIVITY"
+    const val LOG_VIEWMODEL = "LOG_VIEWMODEL"
 }

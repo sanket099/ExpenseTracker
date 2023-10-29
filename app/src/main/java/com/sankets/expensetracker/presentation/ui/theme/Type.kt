@@ -11,10 +11,10 @@ import com.sankets.expensetracker.R
 // Set of Material typography styles to start with
 
 val fonts = FontFamily(
-    Font(R.font.poppins_regular, FontWeight.Normal),
-    Font(R.font.poppins_bold, weight = FontWeight.Bold),
-    Font(R.font.poppins_semibold, weight = FontWeight.SemiBold),
-    Font(R.font.poppins_thin, weight = FontWeight.Thin),
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_medium, weight = FontWeight.Bold),
+    Font(R.font.inter_medium, weight = FontWeight.SemiBold),
+    Font(R.font.inter_light, weight = FontWeight.Thin),
 )
 val Typography = Typography(
     body1 = TextStyle(

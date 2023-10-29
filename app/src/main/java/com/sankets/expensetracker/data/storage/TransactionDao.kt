@@ -1,4 +1,4 @@
-package com.sankets.expensetracker.data.room
+package com.sankets.expensetracker.data.storage
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,4 +16,6 @@ interface TransactionDao {
 
     @Query("SELECT * FROM $TRANSACTION_TABLE")
     fun getTransactions(): Flow<List<Transaction>>
+    @Query("SELECT * FROM $TRANSACTION_TABLE where bank_type = :bankType")
+    fun getTransactionBasedOnBankType(bankType : String): Flow<List<Transaction>>
 }

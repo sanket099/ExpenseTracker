@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -31,6 +32,7 @@ import com.sankets.expensetracker.presentation.ui.theme.Background
 import com.sankets.expensetracker.presentation.ui.theme.CardColor
 import com.sankets.expensetracker.presentation.ui.theme.PrimaryText
 import com.sankets.expensetracker.presentation.ui.theme.SecondaryText
+import com.sankets.expensetracker.presentation.ui.theme.fonts
 
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalGlideComposeApi::class)
@@ -45,39 +47,39 @@ fun GetBanks(
             listOf(
                 Banks(
                     id = 0,
-                    name = BANK_TYPES[0], //HDFC
+                    name = BANK_TYPES[1], //HDFC
                     isSelected = false,
                     icon = "https://w7.pngwing.com/pngs/636/81/png-transparent-hdfc-thumbnail-bank-logos.png"
                 ),
 
                 Banks(
                     id = 1,
-                    name = BANK_TYPES[1], //SBI
+                    name = BANK_TYPES[2], //SBI
                     isSelected = false,
                     icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/SBI-logo.svg/2048px-SBI-logo.svg.png"
                 ),
                 Banks(
                     id = 2,
-                    name = BANK_TYPES[2], //PAYTM
+                    name = BANK_TYPES[3], //PAYTM
                     isSelected = false,
                     icon = "https://aniportalimages.s3.amazonaws.com/media/details/pauyau_PlnW2rW.jpg"
                 ),
                 Banks(
                     id = 3,
-                    name = BANK_TYPES[3], //AXIS
+                    name = BANK_TYPES[4], //AXIS
                     isSelected = false,
                     icon = "https://i0.wp.com/www.logotaglines.com/wp-content/uploads/2016/08/Axis-Bank-Logo.png"
                 ),
                 Banks(
                     id = 4,
-                    name = BANK_TYPES[4], //KOTAK
+                    name = BANK_TYPES[5], //KOTAK
                     isSelected = false,
                     icon = "https://companieslogo.com/img/orig/KOTAKBANK.NS-36440c5e.png"
 
                 ),
                 Banks(
                     id = 5,
-                    name = BANK_TYPES[5], //ICICI
+                    name = BANK_TYPES[6], //ICICI
                     isSelected = false,
                     icon = "https://i.pinimg.com/originals/ff/d5/31/ffd531a6a78464512a97848e14506738.png"
                 ),
@@ -98,6 +100,7 @@ fun GetBanks(
                 onClick = {
 //                    viewModel.sharedPrefs.putBalance(AVAILABLE_BALANCE, text.toDouble())
                     viewModel.sharedPrefs.putBanks(BANKS, set)
+                    navController.popBackStack()
                     navController.navigate(Screen.HomeScreen.route)
                 },
                 backgroundColor = Color.White,
@@ -119,6 +122,8 @@ fun GetBanks(
                 color = PrimaryText,
                 fontSize = 24.sp,
                 textAlign = TextAlign.Start,
+                fontFamily = fonts,
+                fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -127,6 +132,8 @@ fun GetBanks(
                 color = SecondaryText,
                 fontSize = 14.sp,
                 textAlign = TextAlign.Start,
+                fontFamily = fonts,
+                fontWeight = FontWeight.Normal,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -168,7 +175,9 @@ fun GetBanks(
                                 Text(
                                     text = items[i].name,
                                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                                    color = Color.White
+                                    color = Color.White,
+                                    fontFamily = fonts,
+                                    fontWeight = FontWeight.Normal,
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))

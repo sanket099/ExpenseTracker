@@ -4,5 +4,6 @@ data class SMS(
     val id : String,
     val source : String,
     val msgBody : String,
-    val time: Long
+    val time: Long,
+    val bankType : String
 )

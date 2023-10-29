@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sankets.expensetracker.R
@@ -18,6 +19,7 @@ import com.sankets.expensetracker.presentation.ui.theme.Background
 import com.sankets.expensetracker.presentation.ui.theme.CardColor
 import com.sankets.expensetracker.presentation.ui.theme.PrimaryText
 import com.sankets.expensetracker.presentation.ui.theme.SecondaryText
+import com.sankets.expensetracker.presentation.ui.theme.fonts
 import kotlin.random.Random
 
 
@@ -40,7 +42,9 @@ fun SmsDetailScreen(
                 text = "SMS",
                 color = PrimaryText,
                 fontSize = 24.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                fontFamily = fonts,
+                fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = modifier.height(16.dp))
 
@@ -62,21 +66,27 @@ fun SmsDetailScreen(
                         text = smsSource!!,
                         color = PrimaryText,
                         fontSize = 20.sp,
-                        modifier = Modifier.align(Alignment.Start)
+                        modifier = Modifier.align(Alignment.Start),
+                        fontFamily = fonts,
+                        fontWeight = FontWeight.Bold,
                     )
                     Spacer(modifier = modifier.height(16.dp))
                     Text(
                         text = smsBody!!,
                         color = PrimaryText,
                         fontSize = 16.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        fontFamily = fonts,
+                        fontWeight = FontWeight.Normal,
                     )
                     Spacer(modifier = modifier.height(16.dp))
                     Text(
                         text = smsDate!!,
                         color = SecondaryText,
                         fontSize = 16.sp,
-                        modifier = Modifier.align(Alignment.End)
+                        modifier = Modifier.align(Alignment.End),
+                        fontFamily = fonts,
+                        fontWeight = FontWeight.Light,
                     )
 
                 }
@@ -89,24 +99,12 @@ fun SmsDetailScreen(
                 painterResource(getRandomDoodle()),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize().padding(32.dp)
             )
 
         }
-//    }
-//    Box(
-//        contentAlignment = Alignment.Center,
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(Background),
-//
-//    )
-//         {
-
 
     }
-
-
 
 }
 private fun getRandomDoodle() : Int{

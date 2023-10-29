@@ -9,3 +9,6 @@ val SecondaryText = Color(0xFFB3B3B3)
 val Accent = Color(0xFFA2F5BF)
 val AccentSecondary = Color(0xFFF5A2A2)
 val CardColor = Color(0xFF212121)
+
+val DotsSelectedColor = Color(0xFF9DB253)
+val DotsUnSelectedColor = Color(0xFFFEFFEC)

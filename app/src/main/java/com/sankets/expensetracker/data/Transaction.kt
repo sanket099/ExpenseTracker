@@ -23,5 +23,7 @@ data class Transaction(
     @ColumnInfo(name = "date")
     val date : Long,
     @ColumnInfo(name = "msg_body")
-    val msgBody : String
+    val msgBody : String,
+    @ColumnInfo(name = "bank_type")
+    val bankType : String
 )

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -41,7 +42,6 @@ fun ExpenseCard(
                     val date = getDate(item.date).replace("/", "\\")
                     val source = item.sourceName.replace("/", "\\")
                     navController.navigate(Screen.SmsScreen.withArgs(source, body, date))
-                    Log.d("TAG", "ExpenseCard: ${body}")
                 })
     ) {
         Column(
@@ -57,7 +57,9 @@ fun ExpenseCard(
                 Text(
                     text = item.amount,
                     color = PrimaryText,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    fontFamily = fonts,
+                    fontWeight = FontWeight.Normal,
                 )
                 if (item.isCredited) {
                     Icon(
@@ -84,12 +86,16 @@ fun ExpenseCard(
                 Text(
                     text = item.sourceName,
                     color = SecondaryText,
-                    style = MaterialTheme.typography.body2
+                    style = MaterialTheme.typography.body2,
+                    fontFamily = fonts,
+                    fontWeight = FontWeight.Thin,
                 )
                 Text(
                     text = getDate(item.date),
                     color = SecondaryText,
-                    style = MaterialTheme.typography.body2
+                    style = MaterialTheme.typography.body2,
+                    fontFamily = fonts,
+                    fontWeight = FontWeight.Thin,
                 )
 
 
