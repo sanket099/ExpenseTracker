@@ -25,4 +25,4 @@ ExpenseLog is designed to be beautifully simple to use. This app is in active de
 
 Tech Architecture : 
 
-![arch diagram](https://drive.google.com/file/d/1LQiEKmix0PP9Rt3WTsLSny8YA_ZRESK4/view?usp=sharing)
+![arch diagram](https://github.com/sanket099/ExpenseTracker/blob/master/Screenshot%202023-10-30%20at%202.28.08%20AM.png)
