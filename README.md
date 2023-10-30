@@ -22,6 +22,7 @@ Start taking control of your finances and gain a clear understanding of your exp
 
 ExpenseLog is designed to be beautifully simple to use. This app is in active development with most popular feature requests / suggestions added. So if you want to shape the future of ExpenseLog just type in your feedback and suggestions. 
 
+Find it on Google Play : https://play.google.com/store/apps/details?id=com.sankets.expensetracker
 
 Tech Architecture : 
 
